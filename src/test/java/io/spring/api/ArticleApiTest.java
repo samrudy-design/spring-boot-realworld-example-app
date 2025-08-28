@@ -208,14 +208,13 @@ public class ArticleApiTest extends TestWithCurrentUser {
 
   @Test
   public void should_handle_concurrent_article_update_conflict() throws Exception {
-    Article originalArticle = new Article("original title", "desc", "body", 
-        Arrays.asList("java"), user.getId());
-    
-    when(articleRepository.findBySlug(eq(originalArticle.getSlug())))
-        .thenReturn(Optional.empty());
-    
+    Article originalArticle =
+        new Article("original title", "desc", "body", Arrays.asList("java"), user.getId());
+
+    when(articleRepository.findBySlug(eq(originalArticle.getSlug()))).thenReturn(Optional.empty());
+
     Map<String, Object> updateParam = prepareUpdateParam("new title", "new body", "new desc");
-    
+
     given()
         .contentType("application/json")
         .header("Authorization", "Token " + token)
